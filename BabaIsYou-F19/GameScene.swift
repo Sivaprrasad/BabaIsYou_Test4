@@ -13,15 +13,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var baba:SKSpriteNode!
     let BABA_SPEED:CGFloat = 20
+    
+    var wall:SKSpriteNode!
+    var winblock:SKSpriteNode!
+    var stopblock:SKSpriteNode!
+    var wallblock:SKSpriteNode!
+    var flagblock:SKSpriteNode!
+    var isblock:SKSpriteNode!
+    var flag:SKSpriteNode!
+    
 
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
         self.baba = self.childNode(withName: "baba") as? SKSpriteNode
+        
+        self.winblock = self.childNode(withName: "winblock") as? SKSpriteNode
+        
+        self.stopblock = self.childNode(withName: "stopblock") as? SKSpriteNode
+        
+        self.wall = self.childNode(withName: "wall") as? SKSpriteNode
+        self.wallblock = self.childNode(withName: "wallblock") as? SKSpriteNode
+        
+        self.flag = self.childNode(withName: "flag") as? SKSpriteNode
+        self.flagblock = self.childNode(withName: "flagblock") as? SKSpriteNode
+        
+        self.isblock = self.childNode(withName: "isblock") as? SKSpriteNode
+        
     }
    
     func didBegin(_ contact: SKPhysicsContact) {
         print("Something collided!")
+        let nodeA = contact.bodyA.node
+        let nodeB = contact.bodyB.node
+        
+               
+        if (nodeA!.name == "wallblock" && nodeB!.name == "isblock") {
+        
+            print("WALLS WILL STOP THE BABA")
+            
+        }
+        
+             
     }
     
     override func update(_ currentTime: TimeInterval) {
