@@ -12,7 +12,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var baba:SKSpriteNode!
-    let BABA_SPEED:CGFloat = 20
+    let BABA_SPEED:CGFloat = 30
     
     var wall:SKSpriteNode!
     var winblock:SKSpriteNode!
@@ -47,12 +47,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let nodeA = contact.bodyA.node
         let nodeB = contact.bodyB.node
         
-               
-        if (nodeA!.name == "wallblock" && nodeB!.name == "isblock") {
-        
-            print("WALLS WILL STOP THE BABA")
+        //WALL IS STOP
+        if ((nodeA!.name == "wallblock" || nodeB!.name == "isblock") && (nodeA!.name == "isblock" || nodeB!.name == "stopblock")) {
             
+            print("WALLS WILL STOP THE BABA")
+            self.wall.physicsBody = SKPhysicsBody(rectangleOf: wall.size)
+            self.wall.physicsBody?.affectedByGravity = false
+            self.wall.physicsBody?.allowsRotation = false
+            self.wall.physicsBody?.isDynamic = false
         }
+        else{
+            print("BABA WILL MOVE THROUGH WALLS")
+        }
+        
+//         // Detect when WALL, IS and  STOP collide
+//        if ((self.wallblock.frame.intersects(self.isblock.frame)) && (self.isblock.frame.intersects(self.stopblock.frame)))
+//        {
+//            print("WALLS WILL STOP THE BABA")
+//        }
+        
+    
         
              
     }
