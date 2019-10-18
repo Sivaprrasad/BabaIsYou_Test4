@@ -43,7 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
    
     func didBegin(_ contact: SKPhysicsContact) {
-        print("Something collided!")
+        //print("Something collided!")
+/*
         let nodeA = contact.bodyA.node
         let nodeB = contact.bodyB.node
         
@@ -59,12 +60,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         else{
             print("BABA WILL MOVE THROUGH WALLS")
         }
+ */
         
-//         // Detect when WALL, IS and  STOP collide
-//        if ((self.wallblock.frame.intersects(self.isblock.frame)) && (self.isblock.frame.intersects(self.stopblock.frame)))
-//        {
-//            print("WALLS WILL STOP THE BABA")
-//        }
+         // Detect when WALL, IS and  STOP collide
+        if ((self.wallblock.frame.intersects(self.isblock.frame)) && (self.isblock.frame.intersects(self.stopblock.frame))==true)
+        {
+            print("WALLS WILL STOP THE BABA")
+            self.wall.physicsBody = SKPhysicsBody(rectangleOf: wall.size)
+            self.wall.physicsBody?.affectedByGravity = false
+            self.wall.physicsBody?.allowsRotation = false
+            self.wall.physicsBody?.isDynamic = false
+        }
         
     
         
