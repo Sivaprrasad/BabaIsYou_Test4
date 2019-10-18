@@ -26,19 +26,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
         self.physicsWorld.contactDelegate = self
         
+        //BABA - PLAYER
         self.baba = self.childNode(withName: "baba") as? SKSpriteNode
+        self.baba.physicsBody?.categoryBitMask = 1
         
-        self.winblock = self.childNode(withName: "winblock") as? SKSpriteNode
-        
-        self.stopblock = self.childNode(withName: "stopblock") as? SKSpriteNode
-        
+        //WALLS
         self.wall = self.childNode(withName: "wall") as? SKSpriteNode
-        self.wallblock = self.childNode(withName: "wallblock") as? SKSpriteNode
+        self.wall.physicsBody?.isResting = true
+        self.wall.physicsBody?.categoryBitMask = 2
         
-        self.flag = self.childNode(withName: "flag") as? SKSpriteNode
-        self.flagblock = self.childNode(withName: "flagblock") as? SKSpriteNode
         
+        //ISBLOCK
         self.isblock = self.childNode(withName: "isblock") as? SKSpriteNode
+        self.isblock.physicsBody?.categoryBitMask = 4
+        
+        //WIN BLOCK
+        self.wallblock = self.childNode(withName: "wallblock") as? SKSpriteNode
+        self.wallblock.physicsBody?.categoryBitMask = 8
+        
+        //FLAG BLOCK
+        self.flagblock = self.childNode(withName: "flagblock") as? SKSpriteNode
+        self.flagblock.physicsBody?.categoryBitMask = 16
+        
+        //STOP BLOCK
+        self.stopblock = self.childNode(withName: "stopblock") as? SKSpriteNode
+        self.flagblock.physicsBody?.categoryBitMask = 32
+        
+        //WIN BLOCK
+        self.winblock = self.childNode(withName: "winblock") as? SKSpriteNode
+        self.flagblock.physicsBody?.categoryBitMask = 64
+        
+        //FLAG
+        self.flag = self.childNode(withName: "flag") as? SKSpriteNode
+        self.flagblock.physicsBody?.categoryBitMask = 128
         
     }
    
