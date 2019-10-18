@@ -23,7 +23,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var stopblock:SKSpriteNode!
     var wallblock:SKSpriteNode!
     var flagblock:SKSpriteNode!
-    var isblock:SKSpriteNode!
+    
+    var isblock1:SKSpriteNode!
+    var isblock2:SKSpriteNode!
+    
     var flag:SKSpriteNode!
     
 
@@ -33,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //BABA - PLAYER
         self.baba = self.childNode(withName: "baba") as? SKSpriteNode
         self.baba.physicsBody?.categoryBitMask = 1
+        self.baba.physicsBody?.affectedByGravity = false
+        self.baba.physicsBody?.allowsRotation = false
         self.baba.physicsBody?.isDynamic = true
         
         //WALLS
@@ -49,8 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         //ISBLOCK
-        self.isblock = self.childNode(withName: "isblock") as? SKSpriteNode
-        self.isblock.physicsBody?.categoryBitMask = 4
+        self.isblock1 = self.childNode(withName: "isblock1") as? SKSpriteNode
+        self.isblock1.physicsBody?.categoryBitMask = 4
+        
+        self.isblock2 = self.childNode(withName: "isblock2") as? SKSpriteNode
+        self.isblock2.physicsBody?.categoryBitMask = 4
         
         //WIN BLOCK
         self.wallblock = self.childNode(withName: "wallblock") as? SKSpriteNode
@@ -60,6 +68,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //FLAG BLOCK
         self.flagblock = self.childNode(withName: "flagblock") as? SKSpriteNode
         self.flagblock.physicsBody?.categoryBitMask = 16
+        self.flagblock.physicsBody?.affectedByGravity = false
+        self.flagblock.physicsBody?.allowsRotation = false
         self.flagblock.physicsBody?.isDynamic = true
         
         //STOP BLOCK
@@ -70,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //WIN BLOCK
         self.winblock = self.childNode(withName: "winblock") as? SKSpriteNode
         self.winblock.physicsBody?.categoryBitMask = 64
+        self.winblock.physicsBody?.affectedByGravity = false
+        self.winblock.physicsBody?.allowsRotation = false
         self.winblock.physicsBody?.isDynamic = true
         
         //FLAG
@@ -104,7 +116,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Called before each frame is rendered
 
         // Detect when WALL, IS and  STOP collide
-        if ((self.wallblock.frame.intersects(self.isblock.frame)) && (self.isblock.frame.intersects(self.stopblock.frame))==true)
+        if ((self.wallblock.frame.intersects(self.isblock1.frame)) && (self.isblock1.frame.intersects(self.stopblock.frame))==true)
         {
             print("WALLS WILL STOP THE BABA")
             self.wall1.physicsBody = SKPhysicsBody(rectangleOf: wall1.size)
@@ -127,11 +139,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.wall3.physicsBody?.isDynamic = false
             self.wall4.physicsBody?.isDynamic = false
         }
-        else{
-            print("BABA WILL GOTHROUGH THE WALLS")
-           
+        else if ((self.wallblock.frame.intersects(self.isblock1.frame)) && (self.isblock1.frame.intersects(self.stopblock.frame))==false){
+            print("BABA WILL GO THROUGH THE WALLS")
+    
+//            self.wall2.physicsBody?.SKPhysicsBody = false
+//            self.wall3.physicsBody?.SKPhysicsBody = false
+//            self.wall4.physicsBody?.SKPhysicsBody = false
         }
-    }
+        
+        if ((self.flagblock.frame.intersects(self.isblock2.frame)) && (self.isblock2.frame.intersects(self.winblock.frame)) == true)
+        {
+            print("Go Touch the Flag")
+            
+            if(self.baba.frame.intersects(self.flag.frame) == true){
+                
+                self.flag.physicsBody = SKPhysicsBody(rectangleOf: flag.size)
+                self.flag.physicsBody?.affectedByGravity = false
+                self.flag.physicsBody?.allowsRotation = false
+                self.flag.physicsBody?.isDynamic = false
+                print("CONGRATULATIONS YOU WON")
+                
+                
+            }
+        }
+        
+}
+        
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         // GET THE POSITION WHERE THE MOUSE WAS CLICKED
